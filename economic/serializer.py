@@ -13,6 +13,11 @@ class EconomicSerializer(object):
             else:
                 self._mutable_fields[field] = value
 
+
+    @property
+    def valid_fields(self):
+        return [convert_from_camelCase(f) for f in list(self._mutable_fields.keys()) + list(self._immutable_fields.keys())]
+
     def __repr__(self):
         return u"<%s: %s>" % (self.__class__.__name__, self.id)
 
