@@ -1,4 +1,4 @@
-from economic.utils import convert_from_camelCase
+from economic.utils import convert_from_camel_case
 
 
 class EconomicSerializer(object):
@@ -7,7 +7,7 @@ class EconomicSerializer(object):
         self._immutable_fields = {}
         self._field_translator = {}
         for field, value in object_dict.items():
-            self._field_translator[convert_from_camelCase(field)] = field
+            self._field_translator[convert_from_camel_case(field)] = field
             if field in ['self', 'customer']:
                 self._immutable_fields[field] = value
             else:
@@ -16,10 +16,16 @@ class EconomicSerializer(object):
 
     @property
     def valid_fields(self):
-        return [convert_from_camelCase(f) for f in list(self._mutable_fields.keys()) + list(self._immutable_fields.keys())]
+        return [convert_from_camel_case(f) for f in list(self._mutable_fields.keys()) + list(self._immutable_fields.keys())]
 
     def __repr__(self):
-        return u"<%s: %s>" % (self.__class__.__name__, self.id)
+        return "<%s: %s>" % (self.__class__.__name__, self.__str__())
+
+    def __str__(self):
+        return self.__unicode__().encode('utf-8')
+
+    def __unicode__(self):
+        return u"%d" % self.id
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self._mutable_fields == other._mutable_fields and \
