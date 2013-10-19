@@ -6,6 +6,7 @@ class EconomicSerializer(object):
         self._mutable_fields = {}
         self._immutable_fields = {}
         self._field_translator = {}
+        self.auth = auth
         for field, value in object_dict.items():
             self._field_translator[convert_from_camel_case(field)] = field
             if field in ['self', 'customer']:
@@ -35,7 +36,7 @@ class EconomicSerializer(object):
         return not self.__eq__(other)
 
     def __getattr__(self, item):
-        if item not in ['_mutable_fields', '_immutable_fields', '_field_translator']:
+        if item not in ['_mutable_fields', '_immutable_fields', '_field_translator', 'auth']:
             key = self._field_translator[item]
             if key in self._mutable_fields:
                 return self._mutable_fields[key]
@@ -44,7 +45,7 @@ class EconomicSerializer(object):
         super(EconomicSerializer, self).__getattribute__(item)
 
     def __setattr__(self, item, value):
-        if item not in ['_mutable_fields', '_immutable_fields', '_field_translator']:
+        if item not in ['_mutable_fields', '_immutable_fields', '_field_translator', 'auth']:
             key = self._field_translator[item]
             if key in self._mutable_fields:
                 self._mutable_fields[key] = value
