@@ -1,6 +1,6 @@
 from economic.query import QueryMixin
 from economic.serializer import EconomicSerializer
-from economic.utils import convert_from_camelCase
+from economic.utils import convert_from_camel_case
 
 
 class InvoiceSerializer(EconomicSerializer):
@@ -18,6 +18,9 @@ class InvoiceSerializer(EconomicSerializer):
 
 class BookedInvoice(InvoiceSerializer, QueryMixin):
     base_url = "https://restapi.e-conomic.com/invoices/booked/"
+
+    def __unicode__(self):
+        return u"%s %s" % (self.id, self.customer_name)
 
 
 class DraftInvoice(InvoiceSerializer, QueryMixin):
