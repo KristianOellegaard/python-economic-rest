@@ -3,7 +3,7 @@ from setuptools import setup
 from economic import __version__
 
 setup(
-    name = "django-health-check",
+    name = "python-economic-rest",
     version = __version__,
     author = "Kristian Oellegaard",
     author_email = "kristian@kristian.io",
