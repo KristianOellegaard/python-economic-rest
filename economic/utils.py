@@ -11,7 +11,8 @@ def convert_from_camel_case(name):
     return all_cap_re.sub(r'\1_\2', s1).lower()
 
 
-def economic_request(auth, url):
+def economic_request(auth, url, limit=1000, skip_pages=0):
+    url = u"%s?pagesize=%s&skippages=%s" % (url, limit, skip_pages)
     r = requests.get(
         url,
         data=json.dumps({}),

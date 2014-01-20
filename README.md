@@ -18,10 +18,10 @@ ACCESS_ID = "<access id>"
 
 auth = Authentication(APP_ID, ACCESS_ID)
 
-print BookedInvoice.all(auth)
-print DraftInvoice.all(auth)
-print Customer.all(auth)
-print Product.all(auth)
+print list(BookedInvoice.all(auth))
+print list(DraftInvoice.all(auth))
+print list(Customer.all(auth))
+print list(Product.all(auth))
 
 # or
 
@@ -33,7 +33,7 @@ print [p.name for p in Product.all(auth)]
 
 # Find usable fields
 
-print BookedInvoice.all(auth)[0].valid_fields
+print list(BookedInvoice.all(auth))[0].valid_fields
 [u'customer_city', u'customer_name', u'gross_amount', u'currency', u'vat_amount', u'customer_country', u'net_amount', u'id', u'layout_id', u'net_amount_base_currency', u'due_date', u'is_vat_included', u'rounding_amount', u'order_id', u'customer_address', u'sales_document_type', u'date', u'deduction_amount', u'remainder', u'term_of_payment_id', u'remainder_base_currency', u'customer_postal_code', u'pdf', u'customer', u'self']
 # Beware that economic might not always give us all the fields, so this could vary slightly per invoice
 
