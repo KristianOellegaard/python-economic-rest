@@ -31,7 +31,7 @@ def economic_request(auth, url, limit=1000, skip_pages=0):
     )
     if r.status_code == 200:
         return json.loads(r.content)
-    elif r.status_code == 401:
+    elif r.status_code == 401 or r.status_code == 403:
         raise PermissionDenied()
     elif r.status_code == 404:
         raise ResourceDoesNotExist()
