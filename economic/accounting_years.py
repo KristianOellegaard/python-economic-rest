@@ -16,4 +16,4 @@ class AccountingYear(EconomicSerializer, QueryMixin):
         return False
 
     def get_account_entries(self):
-        return AccountEntry.filter(self.auth, year=self.year)
+        return AccountEntry._query(self.auth, self.entries.split('?')[0], page_size=1000)
