@@ -6,7 +6,7 @@ class QueryMixin(object):
     def _query(cls, auth, base_url, page_size, limit=None):
         assert page_size <= 1000, "Max 1000 items per page allowed. The generator will automatically fetch extra pages."
         page = 0
-        total_pages = (limit/page_size) or 1
+        total_pages = (limit/page_size) if limit and page_size else 1
         while page <= total_pages:
             request = economic_request(auth, base_url, limit=page_size, skip_pages=page)
             for itm in request['collection']:
