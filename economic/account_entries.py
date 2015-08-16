@@ -6,7 +6,7 @@ class AccountEntry(EconomicSerializer, QueryMixin):
     base_url = "https://restapi.e-conomic.com/accounting-years/%(year)s/entries"  # Use .filter(year=2014)
 
     @classmethod
-    def all(cls, auth, limit=1000):
+    def all(cls, auth, limit=None, page_size=1000):
         raise Exception("Please use .filter() and provide year as keyword argument")
 
     def __unicode__(self):
