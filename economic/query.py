@@ -20,11 +20,11 @@ class QueryMixin(object):
         """
         Returns a generator that on-demand fetches all items, at max `limit` at a time.
         """
-        return cls._query(auth, cls.base_url, page_size=limit)
+        return cls._query(auth, cls.base_url, page_size=page_size, limit=limit)
 
     @classmethod
     def filter(cls, auth, page_size=1000, limit=None, **kwargs):
         """
         Returns a generator that on-demand fetches all items, at max `limit` at a time.
         """
-        return cls._query(auth, cls.base_url % kwargs, page_size=limit)
+        return cls._query(auth, cls.base_url % kwargs, page_size=page_size, limit=limit)
