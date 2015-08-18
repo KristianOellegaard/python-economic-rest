@@ -22,8 +22,8 @@ class PermissionDenied(EconomicAPIException):
 class ResourceDoesNotExist(EconomicAPIException):
     pass
 
-def economic_request(auth, url, limit=1000, skip_pages=0):
-    url = u"%s?pagesize=%s&skippages=%s" % (url, limit, skip_pages)
+def economic_request(auth, url, page_size=1000, skip_pages=0):
+    url = u"%s?pagesize=%s&skippages=%s" % (url, page_size, skip_pages)
     r = requests.get(
         url,
         data=json.dumps({}),

@@ -18,4 +18,4 @@ class AccountingYear(EconomicSerializer, QueryMixin):
     def get_account_entries(self):
         # self.entries is the URL for this AccountingYear's entries
         # we have to remove the query parameters from the URL first, since they are added again by _query
-        return AccountEntry._query(self.auth, self.entries.split('?')[0], page_size=1000)
+        return AccountEntry._query(self.auth, self.entries.split('?')[0])
