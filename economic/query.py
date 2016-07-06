@@ -7,11 +7,15 @@ class QueryMixin(object):
     @classmethod
     def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False, filters=None):
         assert page_size <= 1000, "Max 1000 items per page allowed. The generator will automatically fetch extra pages."
+        if limit is not None:
+            assert isinstance(limit, int), "limit argument must be an integer, it is %s" % type(limit)
 
         request_params = {
             'pagesize': page_size,
             'skip_pages': 0
         }
+        if limit and limit < page_size:
+            request_params['pagesize'] = limit  # slight optimization
 
         # construct the filter parameter
         if not filters:
@@ -35,7 +39,9 @@ class QueryMixin(object):
         items_returned = 0
         if reverse:
             # an extra query is required when using reverse so we can determine the last page
-            request = economic_request(auth, base_url, request_params=request_params)
+            reverse_request_params = request_params.copy()
+            reverse_request_params['pagesize'] = 1  # make a fast query
+            request = economic_request(auth, base_url, request_params=reverse_request_params)
             total_items = request['pagination']['results']
             if not limit or limit > total_items:
                 limit = total_items
