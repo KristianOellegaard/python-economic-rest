@@ -11,11 +11,6 @@ class InvoiceSerializer(EconomicSerializer):
             return [employee for employee in Employee.all(self.auth) if employee.id == self.our_reference][0]
         return None
 
-    @property
-    def customer(self):
-        # Use self.customer_url to fetch the customer
-        raise NotImplementedError()
-
     def save(self):
         raise NotImplementedError("Please define a run method on %s" % self.__class__.__name__)
 
