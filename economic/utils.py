@@ -1,7 +1,6 @@
 import json
 import re
 import requests
-import urllib
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
@@ -27,8 +26,9 @@ class ResourceDoesNotExist(EconomicAPIException):
 def economic_request(auth, url, request_params=None):
     if not request_params:
         request_params = {}
+    url = u'%s?%s' % (url, u'&'.join([u'%s=%s' % (field, value) for field, value in request_params.items()]))
     r = requests.get(
-        u'%s?%s' % (url, urllib.urlencode(request_params)),
+        url,
         data=json.dumps({}),
         headers={'content-type': 'application/json', 'appId': auth.app_id, 'accessId': auth.token}
     )

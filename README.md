@@ -4,8 +4,8 @@ python-economic-rest
 Easy to use and dynamic python interface to the experimental e-conomic REST api
 
 
-Example
--------
+Basic example
+-------------
 ```python
 
 from economic.auth import Authentication
@@ -21,6 +21,7 @@ auth = Authentication(APP_ID, ACCESS_ID)
 print list(BookedInvoice.all(auth))
 print list(DraftInvoice.all(auth))
 print list(Customer.all(auth))
+print list(Product.all(auth))
 print list(Product.all(auth))
 
 # or
@@ -38,3 +39,22 @@ print list(BookedInvoice.all(auth))[0].valid_fields
 # Beware that economic might not always give us all the fields, so this could vary slightly per invoice
 
 ```
+
+
+Filtering
+---------
+
+You can filter on any field and using any of the supported operators. 
+See https://restdocs.e-conomic.com/#filtering
+
+Currently, only the AND logical operator is supported.
+
+
+```python
+from economic.auth import Authentication
+from economic.invoices import BookedInvoice
+
+auth = Authentication('demo', 'demo')
+print list(BookedInvoice.filter(auth, currency='USD', date__gte='2012-01-01'))
+```
+

@@ -1,10 +1,10 @@
 from economic.employees import Employee
 from economic.query import QueryMixin
 from economic.serializer import EconomicSerializer
-from economic.utils import convert_from_camel_case
 
 
 class InvoiceSerializer(EconomicSerializer):
+    id_property_name = 'booked_invoice_number'
 
     def get_our_reference(self):
         if hasattr(self, 'our_reference'):
@@ -24,11 +24,8 @@ class InvoiceSerializer(EconomicSerializer):
 
 
 class BookedInvoice(InvoiceSerializer, QueryMixin):
-    base_url = "https://restapi.e-conomic.com/invoices/booked/"
-
-    def __unicode__(self):
-        return u"%s %s" % (self.id, self.customer_name)
+    base_url = "https://restapi.e-conomic.com/invoices-experimental/booked/"
 
 
 class DraftInvoice(InvoiceSerializer, QueryMixin):
-    base_url = "https://restapi.e-conomic.com/invoices/drafts/"
+    base_url = "https://restapi.e-conomic.com/invoices-experimental/drafts/"

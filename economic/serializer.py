@@ -2,6 +2,8 @@ from economic.utils import convert_from_camel_case
 
 
 class EconomicSerializer(object):
+    id_property_name = 'id'
+
     def __init__(self, auth, object_dict):
         self._mutable_fields = {}
         self._immutable_fields = {}
@@ -25,7 +27,7 @@ class EconomicSerializer(object):
         return self.__unicode__().encode('utf-8')
 
     def __unicode__(self):
-        return u"%d" % self.id
+        return u"%d" % getattr(self, self.id_property_name, None)
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self._mutable_fields == other._mutable_fields and \
