@@ -52,11 +52,11 @@ class QueryMixin(object):
             page = 0
             page_direction = 1
 
-        while not limit or items_returned < limit:
+        while limit is None or items_returned < limit:
             request_params['skip_pages'] = page
             request = economic_request(auth, base_url, request_params=request_params)
             total_items = request['pagination']['results']
-            if not limit or limit > total_items:
+            if limit is None or limit > total_items:
                 limit = total_items
             for itm in reversed(request['collection']) if reverse else request['collection']:
                 if items_returned < limit:
