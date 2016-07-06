@@ -41,7 +41,7 @@ class EconomicSerializer(object):
             key = self._field_translator[item]
             if key in self._mutable_fields:
                 return self._mutable_fields[key]
-            elif key in self._immutable_fields[key]:
+            elif key in self._immutable_fields:
                 return self._immutable_fields[key]
         super(EconomicSerializer, self).__getattribute__(item)
 
