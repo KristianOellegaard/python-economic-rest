@@ -1,3 +1,5 @@
+import urlparse
+
 from economic.utils import economic_request
 
 
@@ -6,7 +8,7 @@ class QueryMixin(object):
     def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False):
         assert page_size <= 1000, "Max 1000 items per page allowed. The generator will automatically fetch extra pages."
 
-        request = economic_request(auth, base_url, page_size=page_size, skip_pages=0)
+        request = economic_request(auth, base_url, request_params={'page_size': page_size, 'skip_pages': 0})
         total_items = request['pagination']['results']
         if not limit or limit > total_items:
             limit = total_items
@@ -21,7 +23,7 @@ class QueryMixin(object):
             page_direction = 1
 
         while items_returned < limit:
-            request = economic_request(auth, base_url, page_size=page_size, skip_pages=page)
+            request = economic_request(auth, base_url, request_params={'page_size': page_size, 'skip_pages': page})
             total_items = request['pagination']['results']
             if limit > total_items:
                 limit = total_items
@@ -46,3 +48,11 @@ class QueryMixin(object):
         Returns a generator that on-demand fetches `limit` number of items, at max `page_size` at a time.
         """
         return cls._query(auth, cls.base_url % kwargs, page_size=page_size, limit=limit, reverse=reverse)
+
+    @classmethod
+    def get(cls, auth, object_id, **kwargs):
+        """
+        Returns one item with the specified ID.
+        """
+        request = economic_request(auth, urlparse.urljoin(cls.base_url, str(object_id)))
+        return cls(auth, request)

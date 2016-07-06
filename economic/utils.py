@@ -1,6 +1,7 @@
 import json
 import re
 import requests
+import urllib
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
@@ -22,10 +23,12 @@ class PermissionDenied(EconomicAPIException):
 class ResourceDoesNotExist(EconomicAPIException):
     pass
 
-def economic_request(auth, url, page_size=1000, skip_pages=0):
-    url = u"%s?pagesize=%s&skippages=%s" % (url, page_size, skip_pages)
+
+def economic_request(auth, url, request_params=None):
+    if not request_params:
+        request_params = {}
     r = requests.get(
-        url,
+        u'%s?%s' % (url, urllib.urlencode(request_params)),
         data=json.dumps({}),
         headers={'content-type': 'application/json', 'appId': auth.app_id, 'accessId': auth.token}
     )
