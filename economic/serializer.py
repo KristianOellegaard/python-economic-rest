@@ -14,7 +14,6 @@ class EconomicSerializer(object):
             else:
                 self._mutable_fields[field] = value
 
-
     @property
     def valid_fields(self):
         return [convert_from_camel_case(f) for f in list(self._mutable_fields.keys()) + list(self._immutable_fields.keys())]
