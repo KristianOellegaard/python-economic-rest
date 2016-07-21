@@ -12,7 +12,7 @@ class QueryMixin(object):
 
         request_params = {
             'pagesize': page_size,
-            'skip_pages': 0
+            'skippages': 0
         }
         if limit and limit < page_size:
             request_params['pagesize'] = limit  # slight optimization
@@ -53,7 +53,7 @@ class QueryMixin(object):
             page_direction = 1
 
         while limit is None or items_returned < limit:
-            request_params['skip_pages'] = page
+            request_params['skippages'] = page
             request = economic_request(auth, base_url, request_params=request_params)
             total_items = request['pagination']['results']
             if limit is None or limit > total_items:
