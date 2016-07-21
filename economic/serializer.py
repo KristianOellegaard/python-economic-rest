@@ -37,6 +37,8 @@ class EconomicSerializer(object):
         return not self.__eq__(other)
 
     def __getattr__(self, item):
+        if item == 'id':
+            return getattr(self, self.id_property_name)
         if item not in ['_mutable_fields', '_immutable_fields', '_field_translator', 'auth']:
             key = self._field_translator[item]
             if key in self._mutable_fields:
