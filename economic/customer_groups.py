@@ -2,5 +2,5 @@ from economic.query import QueryMixin
 from economic.serializer import EconomicSerializer
 
 
-class Product(EconomicSerializer, QueryMixin):
+class CustomerGroup(EconomicSerializer, QueryMixin):
     base_url = "https://restapi.e-conomic.com/customer-groups/"
