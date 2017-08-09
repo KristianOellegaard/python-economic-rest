@@ -5,7 +5,7 @@ from economic.utils import economic_request
 
 class QueryMixin(object):
     @classmethod
-    def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False, filters=None, timeout=60):
+    def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False, filters=None, timeout=60, sorting=None):
         assert page_size <= 1000, "Max 1000 items per page allowed. The generator will automatically fetch extra pages."
         if limit is not None:
             assert isinstance(limit, int), "limit argument must be an integer, it is %s" % type(limit)
@@ -34,6 +34,12 @@ class QueryMixin(object):
             else:
                 raise NotImplementedError(u'Invalid filter "%s"!' % fltr)
             request_params['filter'] += u'%s$%s:%s' % (field, operator, value)
+
+        if sorting:
+            if isinstance(sorting, (list, tuple)):
+                request_params['sort'] = ','.join(sorting)
+            else:
+                request_params['sort'] = sorting
 
         # make the queries
         items_returned = 0
