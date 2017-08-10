@@ -5,7 +5,7 @@ from economic.utils import economic_request
 
 class QueryMixin(object):
     @classmethod
-    def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False, filters=None, timeout=60):
+    def _query(cls, auth, base_url, page_size=1000, limit=None, reverse=False, filters=None, sorting=None, timeout=60):
         assert page_size <= 1000, "Max 1000 items per page allowed. The generator will automatically fetch extra pages."
         if limit is not None:
             assert isinstance(limit, int), "limit argument must be an integer, it is %s" % type(limit)
@@ -34,6 +34,12 @@ class QueryMixin(object):
             else:
                 raise NotImplementedError(u'Invalid filter "%s"!' % fltr)
             request_params['filter'] += u'%s$%s:%s' % (field, operator, value)
+
+        if sorting:
+            if isinstance(sorting, (list, tuple)):
+                request_params['sort'] = ','.join(sorting)
+            else:
+                request_params['sort'] = sorting
 
         # make the queries
         items_returned = 0
@@ -74,7 +80,7 @@ class QueryMixin(object):
         return cls._query(auth, cls.base_url, page_size=page_size, limit=limit, reverse=reverse, timeout=timeout)
 
     @classmethod
-    def filter(cls, auth, base_url=None, page_size=1000, limit=None, reverse=False, timeout=60, **kwargs):
+    def filter(cls, auth, base_url=None, page_size=1000, limit=None, reverse=False, timeout=60, sorting=None, **kwargs):
         """
         Returns a generator that on-demand fetches `limit` number of items, at max `page_size` at a time.
 
@@ -86,7 +92,7 @@ class QueryMixin(object):
         if not base_url:
             base_url = cls.base_url
         filters = {kwarg: val for kwarg, val in kwargs.items()}
-        return cls._query(auth, base_url, page_size=page_size, limit=limit, reverse=reverse, filters=filters, timeout=60)
+        return cls._query(auth, base_url, page_size=page_size, limit=limit, reverse=reverse, filters=filters, sorting=sorting, timeout=60)
 
     @classmethod
     def get(cls, auth, object_id, timeout=60, **kwargs):

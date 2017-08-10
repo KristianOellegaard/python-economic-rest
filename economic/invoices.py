@@ -19,8 +19,8 @@ class InvoiceSerializer(EconomicSerializer):
 
 
 class BookedInvoice(InvoiceSerializer, QueryMixin):
-    base_url = "https://restapi.e-conomic.com/invoices-experimental/booked/"
+    base_url = "https://restapi.e-conomic.com/invoices/booked/"
 
 
 class DraftInvoice(InvoiceSerializer, QueryMixin):
-    base_url = "https://restapi.e-conomic.com/invoices-experimental/drafts/"
+    base_url = "https://restapi.e-conomic.com/invoices/drafts/"
