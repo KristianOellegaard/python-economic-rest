@@ -29,7 +29,6 @@ def economic_request(auth, url, request_params=None, timeout=60):
     url = u'%s?%s' % (url, u'&'.join([u'%s=%s' % (field, value) for field, value in request_params.items()]))
     r = requests.get(
         url,
-        data=json.dumps({}),
         headers={'content-type': 'application/json', 'appId': auth.app_id, 'accessId': auth.token},
         timeout=timeout
     )
