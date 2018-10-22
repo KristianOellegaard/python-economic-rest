@@ -1,10 +1,10 @@
 import os
 from setuptools import setup
-from economic import __version__
+from economic import version
 
 setup(
     name = "python-economic-rest",
-    version = __version__,
+    version = version,
     author = "Kristian Oellegaard",
     author_email = "kristian@kristian.io",
     description = "Easy to use and dynamic python interface to the experimental e-conomic REST api",
