@@ -105,5 +105,5 @@ class QueryMixin(object):
         """
         Returns one item with the specified ID.
         """
-        request = economic_request(auth, urlparse.urljoin(cls.base_url, str(object_id)), timeout=timeout)
+        request = economic_request(auth, urlparse.urljoin(str(cls.base_url), str(object_id)), timeout=timeout)
         return cls(auth, request)
