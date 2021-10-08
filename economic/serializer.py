@@ -24,7 +24,7 @@ class EconomicSerializer(object):
         return "<%s: %s>" % (self.__class__.__name__, self.__str__())
 
     def __str__(self):
-        return self.__unicode__().encode('utf-8')
+        return self.__unicode__()
 
     def __unicode__(self):
         return u"%d" % getattr(self, self.id_property_name, None)
@@ -40,7 +40,7 @@ class EconomicSerializer(object):
         if item == 'id':
             return getattr(self, self.id_property_name)
         if item not in ['_mutable_fields', '_immutable_fields', '_field_translator', 'auth']:
-            key = self._field_translator[item]
+            key = self._field_translator.get(item)
             if key in self._mutable_fields:
                 return self._mutable_fields[key]
             elif key in self._immutable_fields:
