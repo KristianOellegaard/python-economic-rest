@@ -57,7 +57,7 @@ class QueryMixin(object):
             total_items = request['pagination']['results']
             if not limit or limit > total_items:
                 limit = total_items
-            last_page = total_items / page_size
+            last_page = total_items // page_size
             page = last_page
             page_direction = -1
         else:
